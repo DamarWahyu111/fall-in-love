@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: 'export',
-  basePath: '/valentine-day-gf',
+  basePath: '/fall-in-love',
   typescript: {
     ignoreBuildErrors: true,
   }
