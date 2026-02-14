@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
 import { Toaster } from 'sonner'
+import { AudioProvider } from '@/components/audio-provider'
 
 import './globals.css'
 
@@ -40,8 +41,10 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className="font-sans antialiased">
-        {children}
-        <Toaster richColors position="top-right" />
+        <AudioProvider>
+          {children}
+          <Toaster richColors position="top-right" />
+        </AudioProvider>
       </body>
     </html>
   )

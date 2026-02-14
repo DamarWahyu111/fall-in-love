@@ -1,8 +1,9 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
-import { ChevronLeft, ChevronRight, Play, Pause, Music } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Play, Pause, Music, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { useAudio } from '@/components/audio-provider';
 
 interface PhotoItem {
   id: number;
@@ -12,10 +13,10 @@ interface PhotoItem {
 }
 
 export function PhotoGallery3D() {
+  const { isPlaying, togglePlay } = useAudio();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAutoPlay, setIsAutoPlay] = useState(true);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const audioRef = useRef<HTMLAudioElement>(null);
+  const [selectedPhoto, setSelectedPhoto] = useState<PhotoItem | null>(null);
   const slideIntervalRef = useRef<NodeJS.Timeout | null>(null);
 
   const photos: PhotoItem[] = [
@@ -23,16 +24,16 @@ export function PhotoGallery3D() {
     { id: 2, title: 'Moment 2', color: 'from-red-400 to-purple-400', image: '/photo/moment2.jpg' },
     { id: 3, title: 'Moment 3', color: 'from-purple-400 to-pink-400', image: '/photo/moment3.jpg' },
     { id: 4, title: 'Moment 4', color: 'from-pink-300 to-rose-300', image: '/photo/moment4.jpg' },
-    { id: 5, title: 'Moment 5', color: 'from-red-300 to-pink-300', image: '/photo/moment5.jpg' },
-    { id: 6, title: 'Moment 6', color: 'from-purple-300 to-rose-300', image: '/photo/moment6.jpg' },
+    { id: 5, title: 'Moment 5', color: 'from-red-300 to-pink-300', image: '/photo/moment5.jpeg' },
+    { id: 6, title: 'Moment 6', color: 'from-purple-300 to-rose-300', image: '/photo/moment6.jpeg' },
     { id: 7, title: 'Moment 7', color: 'from-pink-500 to-red-500', image: '/photo/moment7.jpg' },
     { id: 8, title: 'Moment 8', color: 'from-rose-400 to-purple-400', image: '/photo/moment8.jpg' },
     { id: 9, title: 'Moment 9', color: 'from-red-500 to-purple-500', image: '/photo/moment9.jpg' },
     { id: 10, title: 'Moment 10', color: 'from-pink-400 to-rose-400', image: '/photo/moment10.jpg' },
-    { id: 11, title: 'Moment 11', color: 'from-purple-500 to-pink-500', image: '/photo/moment11.jpg' },
-    { id: 12, title: 'Moment 12', color: 'from-red-400 to-pink-500', image: '/photo/moment12.jpg' },
-    { id: 13, title: 'Moment 13', color: 'from-rose-300 to-purple-300', image: '/photo/moment13.jpg' },
-    { id: 14, title: 'Moment 14', color: 'from-pink-500 to-purple-400', image: '/photo/moment14.jpg' },
+    // { id: 11, title: 'Moment 11', color: 'from-purple-500 to-pink-500', image: '/photo/moment11.jpg' },
+    // { id: 12, title: 'Moment 12', color: 'from-red-400 to-pink-500', image: '/photo/moment12.jpg' },
+    // { id: 13, title: 'Moment 13', color: 'from-rose-300 to-purple-300', image: '/photo/moment13.jpg' },
+    // { id: 14, title: 'Moment 14', color: 'from-pink-500 to-purple-400', image: '/photo/moment14.jpg' },
   ];
 
   useEffect(() => {
@@ -47,22 +48,20 @@ export function PhotoGallery3D() {
   }, [isAutoPlay, photos.length]);
 
   const handlePlayMusic = () => {
-    if (audioRef.current) {
-      if (isPlaying) {
-        audioRef.current.pause();
-        setIsPlaying(false);
-      } else {
-        audioRef.current.play().catch(() => {
-          setIsPlaying(false);
-        });
-        setIsPlaying(true);
-      }
-    }
+    togglePlay();
   };
 
   const goToSlide = (index: number) => {
     setCurrentIndex(index);
     setIsAutoPlay(false);
+  };
+
+  const openPhoto = (photo: PhotoItem) => {
+    setSelectedPhoto(photo);
+  };
+
+  const closePhoto = () => {
+    setSelectedPhoto(null);
   };
 
   const nextSlide = () => {
@@ -91,27 +90,12 @@ export function PhotoGallery3D() {
 
   return (
     <div className="w-full space-y-6">
-      {/* Hidden Audio Element */}
-      <audio
-        ref={audioRef}
-        src="https://assets.mixkit.co/active_storage/sfx/2822/2822-preview.mp3"
-        loop
-        onPlay={() => setIsPlaying(true)}
-        onPause={() => setIsPlaying(false)}
-        onEnded={() => {
-          if (audioRef.current) {
-            audioRef.current.currentTime = 0;
-            audioRef.current.play();
-          }
-        }}
-      />
-
       {/* Music Player */}
       <div className="bg-gradient-to-r from-primary/10 to-secondary/10 rounded-xl p-4 border border-border flex items-center justify-between">
         <div className="flex items-center gap-3">
           <Music className="w-5 h-5 text-primary" />
           <div>
-            <p className="font-medium text-sm">Background Music</p>
+            <p className="font-medium text-sm">Music</p>
             <p className="text-xs text-muted-foreground">{isPlaying ? 'Now playing' : 'Click to play'}</p>
           </div>
         </div>
@@ -143,7 +127,7 @@ export function PhotoGallery3D() {
           {photos.map((photo, index) => (
             <div
               key={photo.id}
-              onClick={() => goToSlide(index)}
+              onClick={() => openPhoto(photo)}
               className={`absolute w-72 h-64 cursor-pointer transition-all duration-500 ease-out ${getSlideClass(
                 index
               )}`}
@@ -230,6 +214,41 @@ export function PhotoGallery3D() {
           </Button>
         </div>
       </div>
+
+      {/* Photo Modal / Lightbox */}
+      {selectedPhoto && (
+        <div
+          className="fixed inset-0 bg-black/80 bg-opacity-75 flex items-center justify-center z-50 p-4"
+          onClick={closePhoto}
+        >
+          <div
+            className="relative max-w-4xl w-full h-full max-h-[90vh] flex flex-col items-center justify-center"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Close Button */}
+            <button
+              onClick={closePhoto}
+              className="absolute top-4 right-4 z-10 bg-white/20 hover:bg-white/40 rounded-full p-2 transition-colors"
+              aria-label="Close"
+            >
+              <X className="w-6 h-6 text-white" />
+            </button>
+
+            {/* Photo Image */}
+            <img
+              src={selectedPhoto.image}
+              alt={selectedPhoto.title}
+              className="w-full h-full object-contain rounded-lg"
+            />
+
+            {/* Photo Info */}
+            <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6 text-white rounded-b-lg">
+              <h2 className="text-2xl font-bold mb-1">{selectedPhoto.title}</h2>
+              <p className="text-sm opacity-80">Tekan ESC atau klik luar untuk menutup</p>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
