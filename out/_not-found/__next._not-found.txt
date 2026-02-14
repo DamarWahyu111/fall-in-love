@@ -1,4 +1,0 @@
-1:"$Sreact.fragment"
-2:I[47626,["/valentine-day-gf/_next/static/chunks/1ebb0fab2efcf22e.js","/valentine-day-gf/_next/static/chunks/e17361f2388658cc.js"],"default"]
-3:I[71142,["/valentine-day-gf/_next/static/chunks/1ebb0fab2efcf22e.js","/valentine-day-gf/_next/static/chunks/e17361f2388658cc.js"],"default"]
-0:{"buildId":"X1gfiggHXzVRBcgiygmQ4","rsc":["$","$1","c",{"children":[null,["$","$L2",null,{"parallelRouterKey":"children","template":["$","$L3",null,{}]}]]}],"loading":null,"isPartial":false}
