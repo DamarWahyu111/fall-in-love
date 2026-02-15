@@ -1,11 +1,12 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'export',
-  basePath: '/fall-in-love',
-  typescript: {
-    ignoreBuildErrors: true,
+  // HAPUS ini kalau ada:
+  // output: 'export',
+  // basePath: '/fall-in-love',
+  
+  images: {
+    unoptimized: true
   }
 }
 
-export default nextConfig
-
+module.exports = nextConfig
