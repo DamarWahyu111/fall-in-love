@@ -20,20 +20,20 @@ export function PhotoGallery3D() {
   const slideIntervalRef = useRef<NodeJS.Timeout | null>(null);
 
   const photos: PhotoItem[] = [
-    { id: 1, title: 'Moment 1', color: 'from-pink-400 to-red-400', image: '/photo/moment1.jpg' },
-    { id: 2, title: 'Moment 2', color: 'from-red-400 to-purple-400', image: '/photo/moment2.jpg' },
-    { id: 3, title: 'Moment 3', color: 'from-purple-400 to-pink-400', image: '/photo/moment3.jpg' },
-    { id: 4, title: 'Moment 4', color: 'from-pink-300 to-rose-300', image: '/photo/moment4.jpg' },
-    { id: 5, title: 'Moment 5', color: 'from-red-300 to-pink-300', image: '/photo/moment5.jpeg' },
-    { id: 6, title: 'Moment 6', color: 'from-purple-300 to-rose-300', image: '/photo/moment6.jpeg' },
-    { id: 7, title: 'Moment 7', color: 'from-pink-500 to-red-500', image: '/photo/moment7.jpg' },
-    { id: 8, title: 'Moment 8', color: 'from-rose-400 to-purple-400', image: '/photo/moment8.jpg' },
-    { id: 9, title: 'Moment 9', color: 'from-red-500 to-purple-500', image: '/photo/moment9.jpg' },
-    { id: 10, title: 'Moment 10', color: 'from-pink-400 to-rose-400', image: '/photo/moment10.jpg' },
-    // { id: 11, title: 'Moment 11', color: 'from-purple-500 to-pink-500', image: '/photo/moment11.jpg' },
-    // { id: 12, title: 'Moment 12', color: 'from-red-400 to-pink-500', image: '/photo/moment12.jpg' },
-    // { id: 13, title: 'Moment 13', color: 'from-rose-300 to-purple-300', image: '/photo/moment13.jpg' },
-    // { id: 14, title: 'Moment 14', color: 'from-pink-500 to-purple-400', image: '/photo/moment14.jpg' },
+    { id: 1, title: 'Moment 1', color: 'from-pink-400 to-red-400', image: './photo/moment1.jpg' },
+    { id: 2, title: 'Moment 2', color: 'from-red-400 to-purple-400', image: './photo/moment2.jpg' },
+    { id: 3, title: 'Moment 3', color: 'from-purple-400 to-pink-400', image: './photo/moment3.jpg' },
+    { id: 4, title: 'Moment 4', color: 'from-pink-300 to-rose-300', image: './photo/moment4.jpg' },
+    { id: 5, title: 'Moment 5', color: 'from-red-300 to-pink-300', image: './photo/moment5.jpeg' },
+    { id: 6, title: 'Moment 6', color: 'from-purple-300 to-rose-300', image: './photo/moment6.jpeg' },
+    { id: 7, title: 'Moment 7', color: 'from-pink-500 to-red-500', image: './photo/moment7.jpg' },
+    { id: 8, title: 'Moment 8', color: 'from-rose-400 to-purple-400', image: './photo/moment8.jpg' },
+    { id: 9, title: 'Moment 9', color: 'from-red-500 to-purple-500', image: './photo/moment9.jpg' },
+    { id: 10, title: 'Moment 10', color: 'from-pink-400 to-rose-400', image: './photo/moment10.jpg' },
+    // { id: 11, title: 'Moment 11', color: 'from-purple-500 to-pink-500', image: './photo/moment11.jpg' },
+    // { id: 12, title: 'Moment 12', color: 'from-red-400 to-pink-500', image: './photo/moment12.jpg' },
+    // { id: 13, title: 'Moment 13', color: 'from-rose-300 to-purple-300', image: './photo/moment13.jpg' },
+    // { id: 14, title: 'Moment 14', color: 'from-pink-500 to-purple-400', image: './photo/moment14.jpg' },
   ];
 
   useEffect(() => {

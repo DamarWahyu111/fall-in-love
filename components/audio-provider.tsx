@@ -51,7 +51,7 @@ export function AudioProvider({ children }: { children: ReactNode }) {
       {/* Hidden Audio Element - Tetap ada di DOM selamanya */}
       <audio
         ref={audioRef}
-        src="/audio/mylove.mp3"
+        src="./audio/mylove.mp3"
         loop
         onPlay={() => setIsPlaying(true)}
         onPause={() => setIsPlaying(false)}
